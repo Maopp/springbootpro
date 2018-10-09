@@ -8,6 +8,6 @@
     <title>catpp</title>
 </head>
 <body>
-    <h1>jsp页面</h1>
+    <h1>Jsp主页面</h1>
 </body>
 </html>

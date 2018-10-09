@@ -2,6 +2,8 @@ package com.catpp.springbootpro.service;
 
 import com.catpp.springbootpro.pojo.SysUser;
 
+import java.util.List;
+
 /**
  * com.catpp.springbootpro.service
  *
@@ -12,4 +14,6 @@ import com.catpp.springbootpro.pojo.SysUser;
 public interface SysUserService {
 
     SysUser selectOne(Integer id);
+
+    List<SysUser> selectByModel(SysUser sysUser);
 }

@@ -6,6 +6,8 @@ import com.catpp.springbootpro.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * com.catpp.springbootpro.service.impl
  *
@@ -22,5 +24,11 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public SysUser selectOne(Integer id) {
         return sysUserMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<SysUser> selectByModel(SysUser sysUser) {
+        List<SysUser> userList = sysUserMapper.select(sysUser);
+        return userList;
     }
 }
