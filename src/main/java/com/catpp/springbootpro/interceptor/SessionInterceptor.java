@@ -18,7 +18,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 如果是登陆不做拦截
+        // 如果是登陆不做拦截，也可以从配置类中使用excludePathPatterns进行过滤
         String url = request.getRequestURI();
         if (StringUtils.equals(url, "/user/login") || StringUtils.equals(url, "/user/toLogin")) {
             return true;
