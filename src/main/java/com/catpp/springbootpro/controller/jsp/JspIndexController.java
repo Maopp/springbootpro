@@ -1,4 +1,4 @@
-package com.catpp.springbootpro.jsp;
+package com.catpp.springbootpro.controller.jsp;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * com.catpp.springbootpro.jsp
+ * com.catpp.springbootpro.controller.jsp
  *
  * @Author cat_pp
  * @Date 2018/10/8
