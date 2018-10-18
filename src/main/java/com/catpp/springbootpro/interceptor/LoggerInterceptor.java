@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * com.catpp.springbootpro.interceptor
@@ -73,6 +74,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         loggerInfos.setSessionId(sessionId);
         // 设置请求开始时间
         request.setAttribute(LOGGER_SEND_TIME, System.currentTimeMillis());
+        loggerInfos.setTime(new Date());
         // 设置请求实体到request内，方便afterCompletion方法调用
         request.setAttribute(LOGGER_ENTITY, loggerInfos);
         return true;
