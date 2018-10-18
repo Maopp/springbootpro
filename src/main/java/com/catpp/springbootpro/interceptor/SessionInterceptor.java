@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @Author cat_pp
  * @Date 2018/10/9
- * @Description
+ * @Description 登陆拦截器
  */
 public class SessionInterceptor implements HandlerInterceptor {
 
