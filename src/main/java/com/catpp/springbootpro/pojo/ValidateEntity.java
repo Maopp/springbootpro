@@ -1,6 +1,6 @@
 package com.catpp.springbootpro.pojo;
 
-import com.catpp.springbootpro.annotation.OneToTen;
+import com.catpp.springbootpro.annotation.validate.OneToTen;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 

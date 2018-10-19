@@ -1,5 +1,6 @@
-package com.catpp.springbootpro.annotation;
+package com.catpp.springbootpro.annotation.validate;
 
+import com.catpp.springbootpro.annotation.validate.OneToTen;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;

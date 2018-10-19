@@ -1,4 +1,4 @@
-package com.catpp.springbootpro.annotation;
+package com.catpp.springbootpro.annotation.validate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
