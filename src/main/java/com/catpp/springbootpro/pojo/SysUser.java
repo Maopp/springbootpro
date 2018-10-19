@@ -2,12 +2,14 @@ package com.catpp.springbootpro.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Data
 @Table(name = "sys_user")
-public class SysUser {
+public class SysUser implements Serializable {
+    private static final long serialVersionUID = 3061170688594751675L;
     @Id
     private Integer id;
 
