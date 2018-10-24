@@ -65,3 +65,4 @@ CORS（Cross-Origin Resource Sharing）"跨域资源共享"，是一个W3C标准
 打破了Ajax只能访问本站内的资源限制，CORS在很多地方都有被使用，微信支付的JS支付就是通过JS向微信服务器发送跨域请求。
 开放Ajax访问可被跨域访问的服务器大大减少了后台开发的工作，前后台工作也可以得到很好的明确以及分工
 # 配置跨域参数就可以实现跨域啦
+跨域请求测试html文件路径：src/main/webapp/WEB-INF/mine/cors-test.html
