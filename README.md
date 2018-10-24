@@ -52,3 +52,8 @@ WebSocket是通过socket来实现双工异步通信能力的。但是直接使�
 SpringBoot在tomcat7内嵌版本就已经开始支持了WebSocket的支持，
 配置源码存在于org.springframework.boot.autoconfigure.websocket下
 
+------------------------------------------------------------------------------------------------------------------------
+全局异常处理：
+@ControllerAdvice注解是用来配置控制器通知的，我们可以配置过滤拦截具体一种或者多种类型的注解，添加annotations属性即可，
+因为我们全局返回的都是Json格式的字符串，所以需要再类上配置@ResponseBody注解
+# 使用系统日志功能，记录持久化到数据库

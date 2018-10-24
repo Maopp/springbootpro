@@ -76,4 +76,9 @@ public class LoggerInfos {
     @Column(name = "return_data")
     private String returnData;
 
+    /**
+     * 异常信息
+     */
+    @Column(name = "exception_info")
+    private String exceptionInfo;
 }

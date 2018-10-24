@@ -113,6 +113,10 @@ public class LoggerInterceptor implements HandlerInterceptor {
         loggerInfos.setReturnData(JSON.toJSONString(request.getAttribute(LOGGER_RETURN),
                 SerializerFeature.DisableCircularReferenceDetect,
                 SerializerFeature.WriteMapNullValue));
+        // 设置异常信息
+        if (null != ex) {
+            loggerInfos.setExceptionInfo(ex.toString());
+        }
         // todo 注入服务失败，在配置类中注入拦截器没有调试成功
         /*loggerInfosService.save(loggerInfos);*/
         LoggerInfosMapper loggerInfosMapper = (LoggerInfosMapper) WebBeanUtil.getBean(LoggerInfosMapper.class, request);

@@ -17,5 +17,6 @@
     <result column="time_consuming" property="timeConsuming" jdbcType="INTEGER" />
     <result column="param_data" property="paramData" jdbcType="LONGVARCHAR" />
     <result column="return_data" property="returnData" jdbcType="LONGVARCHAR" />
+    <result column="exception_info" property="exceptionInfo" jdbcType="LONGVARCHAR" />
   </resultMap>
 </mapper>
