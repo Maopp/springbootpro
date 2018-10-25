@@ -16,4 +16,6 @@ public interface SysUserService {
     SysUser selectOne(Integer id);
 
     List<SysUser> selectByModel(SysUser sysUser);
+
+    void register(SysUser sysUser);
 }

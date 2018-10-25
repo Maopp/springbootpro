@@ -15,7 +15,7 @@ import java.util.Date;
  * 要使用@Component注解交由Spring管理
  *
  */
-@Component
+//@Component
 public class PrintTask {
 
 

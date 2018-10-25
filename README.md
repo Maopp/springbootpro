@@ -113,3 +113,33 @@ Year : 可出现", - * /"四个字符，有效范围为1970-2099年
 4、initialDelay属性
 该属性跟上面的fixedDelay、fixedRate有着密切的关系，为什么这么说呢？该属性的作用是第一次执行延迟时间，
 只是做延迟的设定，并不会控制其他逻辑，所以要配合fixedDelay或者fixedRate来使用
+
+
+------------------------------------------------------------------------------------------------------------------------
+使用ApplicationEvent&Listener完成业务解耦：
+ApplicationEvent以及Listener是Spring为我们提供的一个事件监听、订阅的实现，内部实现原理是观察者设计模式，
+设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。事件发布者并不需要考虑谁去监听，
+监听具体的实现内容是什么，发布者的工作只是为了发布事件而已。
+
+# 在Spring内部中有多种方式实现监听如：@EventListener注解、实现ApplicationListener泛型接口、实现SmartApplicationListener接口等
+1、@EventListener实现监听
+注解方式比较简单，并不需要实现任何接口
+只需要让我们的监听类被Spring所管理即可，在我们用户注册监听实现方法上添加@EventListener注解，该注解会根据方法内配置的事件完成监听。
+
+2、实现接口ApplicationListener实现监听
+这种方式也是Spring之前比较常用的监听事件方式，在实现ApplicationListener接口时需要将监听事件作为泛型传递
+实现接口后需要使用@Component注解来声明该监听需要被Spring注入管理，
+本例中，当有UserRegisterEvent事件发布时监听程序会自动调用onApplicationEvent方法并且将UserRegisterEvent对象作为参数传递。
+
+3、实现接口SmartApplicationListener实现有序监听
+SmartApplicationListener接口继承了全局监听ApplicationListener，并且泛型对象使用的ApplicationEvent来作为全局监听，
+可以理解为使用SmartApplicationListener作为监听父接口的实现，监听所有事件发布。
+
+既然是监听所有的事件发布，那么SmartApplicationListener接口添加了两个方法supportsEventType、supportsSourceType来作为区分是否是我们监听的事件，
+只有这两个方法同时返回true时才会执行onApplicationEvent方法。
+
+***提供了一个getOrder方法，这个方法就可以解决执行监听的顺序问题，return的数值越小证明优先级越高，执行顺序越靠前。
+
+# 使用@Async实现异步监听
+@Aysnc其实是Spring内的一个组件，可以完成对类内单个或者多个方法实现异步调用，这样可以大大的节省等待耗时。
+内部实现机制是线程池任务ThreadPoolTaskExecutor，通过线程池来对配置@Async的方法或者类做出执行动作。
