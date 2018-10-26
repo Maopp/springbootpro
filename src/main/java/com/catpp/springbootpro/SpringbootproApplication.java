@@ -1,5 +1,6 @@
 package com.catpp.springbootpro;
 
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,18 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class SpringbootproApplication {
 
 	public static void main(String[] args) {
+
+		/**
+		 * 原始启动方式
+ 		 */
 		SpringApplication.run(SpringbootproApplication.class, args);
+
+		/**
+		 * 隐藏Banner启动方式
+		 */
+		/*SpringApplication springApplication = new SpringApplication(SpringbootproApplication.class);
+		// 设置banner的模式为隐藏
+		springApplication.setBannerMode(Banner.Mode.OFF);
+		springApplication.run(args);*/
 	}
 }

@@ -168,3 +168,23 @@ SpringBoot内置条件注解，以下注解都是元注解@Conditional演变而�
     @ConditionalOnResource：类路径是否有指定的值
     @ConditionalOnSingleCandidate：当指定Bean在SpringIoc容器内只有一个，或者虽然有多个但是指定首选的Bean
     @ConditionalOnWebApplication：当前项目是Web项目的条件
+
+
+------------------------------------------------------------------------------------------------------------------------
+自定义spring boot启动banner：
+1、在src/main/resource下添加一个名叫banner.txt的文件，将需要修改的内容写入到该文件内就可以啦
+2、配置字体颜色：${AnsiColor.BRIGHT_RED}
+
+3、配置背景颜色：${AnsiBackground.BRIGHT_RED}
+
+# 添加的文字内容可以通过banner在线生成工具来生成：
+    http://www.bootschool.net/ascii
+    http://patorjk.com/software/taag/#p=display&f=%E6%B6%82%E9%B8%A6&t=Type%20Something%20
+    https://www.degraeve.com/img2txt.php
+    http://www.network-science.de/ascii/
+
+${AnsiColor.BRIGHT_RED}：设置控制台中输出内容的颜色
+${application.version}：用来获取MANIFEST.MF文件中的版本号
+${application.formatted-version}：格式化后的${application.version}版本信息
+${spring-boot.version}：Spring Boot的版本号
+${spring-boot.formatted-version}：格式化后的${spring-boot.version}版本信息
