@@ -188,3 +188,7 @@ ${application.version}：用来获取MANIFEST.MF文件中的版本号
 ${application.formatted-version}：格式化后的${application.version}版本信息
 ${spring-boot.version}：Spring Boot的版本号
 ${spring-boot.formatted-version}：格式化后的${spring-boot.version}版本信息
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于SpringBoot架构重写springMVC请求参数装载：

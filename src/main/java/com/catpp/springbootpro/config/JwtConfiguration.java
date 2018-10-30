@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Date 2018/10/23
  * @Description
  */
-@Configuration
+//@Configuration
 public class JwtConfiguration implements WebMvcConfigurer {
 
     @Override
