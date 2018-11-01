@@ -203,3 +203,20 @@ https://blog.csdn.net/weixin_42033269/article/details/80035814
 然后在参数校验处理中对数据重新进行封装返回（resolveArgument方法）
 
 加密方法做成多套，通过枚举选择使用哪种加密方式，使用配套的解密方法进行解密，本例做了两套（AES/DES）
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于SpringBoot架构适当使用Profile完成打包环境分离：
+说明：
+    在中大型企业项目开发中，环境分离是必不可少的一步，然而现在的开发人员也只是有这个概念，还是有很多项目采用普通的方式，
+    每次打包发布部署的时候改动一大堆的配置文件，有一个地方忘记改就相当于白更新了一次系统，这种修改配置文件完成环境更换的
+    方式给我们带来了很多的困扰，浪费了我们很多宝贵的时间！早在Spring 3.1版本就已经为我们提供了环境分离的相关注解配置方式，
+    不过在传统的Spring项目中配置Profile确实有点麻烦，在Spring版本的不断更新直到后来SpringBoot成长起来后Profile已经能够
+    很好支持项目配置环境分离。
+
+配置Profile环境：
+    在SpringBoot内已经为了约定好了Profile配置文件的命名规则，即：application-xxx.properties或者application-xxx.yml，
+    我们只需要将对应环境的配置文件放到resources目录下即可，也就是classpath下
+
+激活Profile：
+    在applicatio.properties文件中配置spring.profiles.active=dev/beta/prod就可以啦
