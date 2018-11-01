@@ -3,6 +3,7 @@ package com.catpp.springbootpro.pojo;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Data
 public class Student {
@@ -11,6 +12,7 @@ public class Student {
 
     private String name;
 
+    @Min(18)
     private Integer age;
 
     private String stuClass;

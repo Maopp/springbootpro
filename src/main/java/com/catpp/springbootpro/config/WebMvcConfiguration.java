@@ -1,11 +1,15 @@
 package com.catpp.springbootpro.config;
 
 import com.catpp.springbootpro.annotation.paramresovle.CustomerArgumentResolver;
+import com.catpp.springbootpro.annotation.security.content.ContentSecurityMethodArgumentResolver;
+import com.catpp.springbootpro.interceptor.ContentSecurityInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,13 +23,26 @@ import java.util.List;
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     /**
+     * 配置内容安全拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new ContentSecurityInterceptor()).addPathPatterns("/**");
+    }
+
+    /**
      * 添加参数装载
      * @param resolvers
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         // 将自定义的参数装载添加到spring托管
-        resolvers.add(new CustomerArgumentResolver());
+        // resolvers.add(new CustomerArgumentResolver());
+        List<HandlerMethodArgumentResolver> list = new ArrayList<>();
+        list.add(new CustomerArgumentResolver());
+        list.add(new ContentSecurityMethodArgumentResolver());
+        resolvers.addAll(list);
     }
 
     /**
