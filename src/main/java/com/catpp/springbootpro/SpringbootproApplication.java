@@ -1,5 +1,6 @@
 package com.catpp.springbootpro;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import tk.mybatis.spring.annotation.MapperScan;
 
+@Slf4j
 @SpringBootApplication
 // 扫描mybatis mapper 包路径
 @MapperScan(basePackages = "com.catpp.springbootpro.mapper")
@@ -22,6 +24,8 @@ public class SpringbootproApplication {
 		 * 原始启动方式
  		 */
 		SpringApplication.run(SpringbootproApplication.class, args);
+
+		log.info("【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】");
 
 		/**
 		 * 隐藏Banner启动方式

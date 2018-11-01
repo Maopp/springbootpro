@@ -220,3 +220,38 @@ https://blog.csdn.net/weixin_42033269/article/details/80035814
 
 激活Profile：
     在applicatio.properties文件中配置spring.profiles.active=dev/beta/prod就可以啦
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于Spring Boot 和 Quartz完成定时任务分布式单节点持久化：
+1、为什么要持久化定时任务？
+    在一些项目中定时任务可能是必不可少的，由于某种特殊的原因定时任务可能丢失，如重启定时任务服务项目后，原内存中的定时
+    任务就会被完全释放！那对于我们来说可能是致命的问题。当然也有强制的办法解决这类问题，但是如果我们把定时任务持久化到
+    数据库，像维护普通逻辑数据那样维护任务，就会避免项目中遇到的种种的特殊情况。
+
+quartz与Spring相关框架的整合方式有很多种，本例采用jobDetail使用Spring Ioc托管方式来完成整合，我们可以在定时任务实例
+中使用Spring注入注解完成业务逻辑处理
+
+QuartzConfiguration配置类说明：
+    1、AutowiringSpringBeanJobFactory我们继承了SpringBeanJobFactory类，并且通过实现ApplicationContextAware接口
+    获取ApplicationContext设置方法，通过外部实例化时设置ApplicationContext实例对象，在createJobInstance方法内，
+    我们采用AutowireCapableBeanFactory来托管SpringBeanJobFactory类中createJobInstance方法返回的定时任务实例，
+    这样我们就可以在定时任务类内使用Spring Ioc相关的注解进行注入业务逻辑实例了
+
+    2、任务工厂是在本章配置调度器时所需要的实例，我们通过jobFactory方法注入ApplicationContext实例，来创建
+    一个AutowiringSpringBeanJobFactory对象，并且将对象实例托管到Spring Ioc容器内。
+
+    3、本例采用的是项目内部数据源的方式来设置调度器的jobSotre，官方quartz有两种持久化的配置方案。
+
+    第一种：采用quartz.properties配置文件配置独立的定时任务数据源，可以与使用项目的数据库完全独立。
+    第二种：采用与创建项目统一个数据源，定时任务持久化相关的表与业务逻辑在同一个数据库内。
+
+    可以根据实际的项目需求采取不同的方案，本例主要是通过第二种方案来进行讲解，在上面配置类中可以看到
+    方法schedulerFactoryBean内自动注入了JobFactory实例，也就是我们自定义的AutowiringSpringBeanJobFactory任务工厂实例，
+    另外一个参数就是DataSource（在引入spring-starter-data-jpa依赖后会根据application.yml文件内的数据源相关配置自动
+    实例化DataSource实例，这里直接注入是没有问题的）。
+
+    我们通过调用SchedulerFactoryBean对象的setConfigLocation方法来设置quartz定时任务框架的基本配置，
+    配置文件所在位置：resources/quartz.properties => classpath:/quartz.properties下。
+
+# qrtz_job_details表中存放的时待执行的定时任务
