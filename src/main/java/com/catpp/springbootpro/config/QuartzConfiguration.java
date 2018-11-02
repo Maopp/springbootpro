@@ -91,7 +91,7 @@ public class QuartzConfiguration {
         // 设置覆盖已存在的任务
         schedulerFactoryBean.setOverwriteExistingJobs(true);
         // 项目启动完成后，等待2秒后执行调度器初始化
-        // schedulerFactoryBean.setStartupDelay(2);
+        schedulerFactoryBean.setStartupDelay(2);
         // 设置调度器自动运行
         schedulerFactoryBean.setAutoStartup(true);
         // 设置数据源，使用与项目统一数据源

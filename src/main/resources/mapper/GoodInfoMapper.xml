@@ -10,4 +10,8 @@
     <result column="PRICE" property="price" jdbcType="DECIMAL" />
     <result column="UNIT" property="unit" jdbcType="VARCHAR" />
   </resultMap>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    insert into good_info (name, price, unit) values(#{name}, #{price}, #{unit})
+  </insert>
 </mapper>

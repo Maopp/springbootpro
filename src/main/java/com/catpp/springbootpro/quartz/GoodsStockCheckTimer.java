@@ -19,6 +19,6 @@ import java.util.Date;
 public class GoodsStockCheckTimer extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.info("执行库存检查定时任务，执行时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        log.info("执行库存检查定时任务【分布式：first】，执行时间：{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
 }

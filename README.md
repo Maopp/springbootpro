@@ -255,3 +255,25 @@ QuartzConfiguration配置类说明：
     配置文件所在位置：resources/quartz.properties => classpath:/quartz.properties下。
 
 # qrtz_job_details表中存放的时待执行的定时任务
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于SpringBoot 和 Quartz完成定时任务分布式多节点负载持久化：
+1. org.quartz.scheduler.instanceId ： 定时任务的实例编号，如果手动指定需要保证每个节点的唯一性，因为quartz不允许出现两个
+相同instanceId的节点，我们这里指定为Auto就可以了，我们把生成编号的任务交给quartz。
+
+2. org.quartz.jobStore.isClustered： 这个属性才是真正的开启了定时任务的分布式配置，当我们配置为true时quartz框架就会
+调用ClusterManager来初始化分布式节点。
+
+3. org.quartz.jobStore.clusterCheckinInterval：配置了分布式节点的检查时间间隔，单位：毫秒。
+
+# 开启分布式定时任务之后修改打印信息和项目端口号，可以看到任务自动漂移到其他其他节点上啦。
+
+模拟商品秒杀提醒业务：
+    1、当我们添加商品后自动添加一个商品提前五分钟的秒杀提醒，为关注该商品的用户发送提醒消息。
+    2、在秒杀提醒任务逻辑中，我们通过获取JobDetail的JobDataMap集合来获取在创建任务的时候传递的参数集合，我们这里约定了goodId
+    为商品的编号，在创建任务的时候传递到JobDataMap内，这样quartz在执行该任务的时候就会自动将参数传递到任务逻辑中，我们也
+    就可以通过JobDataMap获取到对应的参数值。
+    3、我们模拟秒杀提醒时间是添加商品后的5分钟，我们通过调用jobDetail实例的getJobDataMap方法就可以获取该任务数据集合，直
+    接调用put方法就可以进行设置指定key的值，该集合继承了StringKeyDirtyFlagMap并且实现了Serializable序列化，因为需要将数据
+    序列化到数据库的qrtz_job_details表内。
