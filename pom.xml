@@ -6,7 +6,12 @@
 	<groupId>com.catpp</groupId>
 	<artifactId>springbootpro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<modules>
+		<module>rabbitmqprovider</module>
+		<module>rabbitmqcommon</module>
+		<module>rabbitmqconsumer</module>
+	</modules>
+	<packaging>pom</packaging>
 
 	<name>springbootpro</name>
 	<description>Demo project for Spring Boot</description>
@@ -206,6 +211,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+		<!--rabbitmq依赖-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 
 

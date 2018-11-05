@@ -277,3 +277,62 @@ QuartzConfiguration配置类说明：
     3、我们模拟秒杀提醒时间是添加商品后的5分钟，我们通过调用jobDetail实例的getJobDataMap方法就可以获取该任务数据集合，直
     接调用put方法就可以进行设置指定key的值，该集合继承了StringKeyDirtyFlagMap并且实现了Serializable序列化，因为需要将数据
     序列化到数据库的qrtz_job_details表内。
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于Spring Boot & RabbitMQ完成DirectExchange分布式消息消费：
+消息队列目前流行的有KafKa、RabbitMQ、ActiveMQ等，它们的诞生无非就是为了解决消息的分布式消费，完成项目、服务之间的解耦动作。4
+消息队列提供者与消费者之间完全采用异步通信方式，极力的提高了系统的响应能力，从而提高系统的网络请求吞吐量。
+每一种的消息队列都有它在设计上的独一无二的优势，在实际的项目技术选型时根据项目的需求来确定。
+
+https://blog.csdn.net/weixin_42033269/article/details/80035839
+
+Exchange
+在RabbitMQ中有三种常用的转发方式，分别是：
+    DirectExchange：路由键方式转发消息；
+    FanoutExchange：广播方式转发消息；
+    TopicExchange：主题匹配方式转发消息
+
+因为RabbitMQ是跨平台的分布式消息队列服务，可以部署在任意的操作系统上，下面我们分别介绍在不同的系统下该怎么去安装RabbitMQ服务。
+
+Windows下安装
+我们先去RabbitMQ官方网站下载最新版的安装包，下载地址：https://www.rabbitmq.com/download.html，可以根据不同的操作系统选择下载。
+我们在安装RabbitMQ服务端时需要Erlang环境的支持，所以我们需要先安装Erlang。
+1. 我们通过Erlang官方网站http://www.erlang.org/downloads下载最新的安装包
+    我们访问RabiitmQ官方下载地址https://www.rabbitmq.com/download.html下载最新安装包。
+
+启动插件：
+     rabbitmq_server-3.7.8\sbin目录执行如下命令：
+     .\rabbitmq-plugins.bat enable rabbitmq_management
+     ---
+     Enabling plugins on node rabbit@DESKTOP-RPROTA7:
+     rabbitmq_management
+     The following plugins have been configured:
+       rabbitmq_management
+       rabbitmq_management_agent
+       rabbitmq_web_dispatch
+     Applying plugin configuration to rabbit@DESKTOP-RPROTA7...
+     The following plugins have been enabled:
+       rabbitmq_management
+       rabbitmq_management_agent
+       rabbitmq_web_dispatch
+
+     started 3 plugins.
+     ---
+     访问http://127.0.0.1:15672地址可以直接打开RabbitMQ的界面管理平台，而默认的用户名/密码分别为：guest/guest，
+     通过该用户可以直接登录管理平台。
+禁用界面管理插件：
+    rabbitmq-plugins.bat disable rabbitmq_management
+
+消息队列配置类内容：com.catpp.rabbitmqcommon.config.UserRegisterQueueCongiguration
+    配置交换实例：
+    配置DirectExchange实例对象，为交换设置一个名称，引用ExchangeEnum枚举配置的交换名称，消息提供者与消息消费者的交换名称
+    必须一致才具备的第一步的通讯基础。
+    配置队列实例：
+    配置Queue实例对象，为消息队列设置一个名称，引用QueueEnum枚举配置的队列名称，当然队列的名称同样也是提供者与消费者之间
+    的通讯基础。
+    绑定队列实例到交换实例：
+    配置Binding实例对象，消息绑定的目的就是将Queue实例绑定到Exchange上，并且通过设置的路由Key进行消息转发，配置了路由Key
+    后，只有符合该路由配置的消息才会被转发到绑定交换上的消息队列。
+
+# 目前需要在可视化平台进行手动维护exchanges/queue/routingKey绑定
