@@ -10,7 +10,8 @@
 		<module>rabbitmqprovider</module>
 		<module>rabbitmqcommon</module>
 		<module>rabbitmqconsumer</module>
-	</modules>
+        <module>rabbitmqconsumer2</module>
+    </modules>
 	<packaging>pom</packaging>
 
 	<name>springbootpro</name>
