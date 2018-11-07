@@ -5,6 +5,8 @@ import com.catpp.rabbitmq.provider.rabbitmq.QueueMessageService;
 import com.catpp.rabbitmq.common.enums.direct.DirectExchangeEnum;
 import com.catpp.rabbitmq.common.enums.direct.QueueEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,11 @@ public class QueueMessageServiceImpl implements QueueMessageService {
      */
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    /**
+     * RabbitMQ 模板消息实现类
+     */
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public void send(Object message, DirectExchangeEnum directExchangeEnum, QueueEnum queueEnum) throws Exception {
@@ -47,6 +54,21 @@ public class QueueMessageServiceImpl implements QueueMessageService {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString().replaceAll("-", ""));
         // 发送消息到消息队列
         rabbitTemplate.convertAndSend(topicExchangeEnum.getName(), routingKey, message, correlationData);
+    }
+
+    @Override
+    public void sendMessageTtl(Object message, String exchange, String routingKey, long delayTimes) {
+        if (StringUtils.isNotEmpty(exchange)) {
+            log.info("延迟：{}毫秒写入消息队列：{}，消息内容：{}", delayTimes, routingKey, message);
+            // 执行发送消息到指定队列
+            amqpTemplate.convertAndSend(exchange, routingKey, message, message1 -> {
+                // 设置延迟毫秒数
+                message1.getMessageProperties().setExpiration(String.valueOf(delayTimes));
+                return message1;
+            });
+        } else {
+            log.error("未找到队列消息：{} 所属的交换机", exchange);
+        }
     }
 
     /**
