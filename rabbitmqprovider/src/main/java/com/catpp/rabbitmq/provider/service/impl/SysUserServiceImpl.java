@@ -2,7 +2,7 @@ package com.catpp.rabbitmq.provider.service.impl;
 
 import com.catpp.rabbitmq.provider.pojo.SysUser;
 import com.catpp.rabbitmq.provider.rabbitmq.QueueMessageService;
-import com.catpp.rabbitmq.common.enums.ExchangeEnum;
+import com.catpp.rabbitmq.common.enums.DirectExchangeEnum;
 import com.catpp.rabbitmq.common.enums.QueueEnum;
 import com.catpp.rabbitmq.provider.mapper.SysUserMapper;
 import com.catpp.rabbitmq.provider.service.SysUserService;
@@ -29,7 +29,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public Integer save(SysUser sysUser) throws Exception {
         userMapper.save(sysUser);
-        queueMessageService.send(sysUser.getId(), ExchangeEnum.USER_REGISTER, QueueEnum.USER_REGISTER);
+        queueMessageService.send(sysUser.getId(), DirectExchangeEnum.USER_REGISTER, QueueEnum.USER_REGISTER);
         return sysUser.getId();
     }
 }

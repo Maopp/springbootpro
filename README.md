@@ -338,3 +338,7 @@ Windows下安装
 # 目前需要在可视化平台进行手动维护exchanges/queue/routingKey绑定
 # 修改工程目录结构，是启动类扫描到common工程的com.catpp.rabbitmq.common.config.UserRegisterQueueCongiguration配置类，初始化
 rabbitmq队列/exchange信息，就不用再管理平台手动维护队列数据啦
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于Spring Boot & RabbitMQ完成TopicExchange分布式消息消费：

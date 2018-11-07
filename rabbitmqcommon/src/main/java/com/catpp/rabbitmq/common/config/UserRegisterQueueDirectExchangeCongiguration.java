@@ -1,6 +1,6 @@
 package com.catpp.rabbitmq.common.config;
 
-import com.catpp.rabbitmq.common.enums.ExchangeEnum;
+import com.catpp.rabbitmq.common.enums.DirectExchangeEnum;
 import com.catpp.rabbitmq.common.enums.QueueEnum;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * 配置Binding实例对象，消息绑定的目的就是将Queue实例绑定到Exchange上，并且通过设置的路由Key进行消息转发，配置了路由Key后，只有符合该路由配置的消息才会被转发到绑定交换上的消息队列。
  */
 @Configuration
-public class UserRegisterQueueCongiguration {
+public class UserRegisterQueueDirectExchangeCongiguration {
 
     /**
      * 配置路由交换对象实例
@@ -32,7 +32,7 @@ public class UserRegisterQueueCongiguration {
      */
     @Bean
     public DirectExchange userRegisterDirectExchange() {
-        return new DirectExchange(ExchangeEnum.USER_REGISTER.getValue());
+        return new DirectExchange(DirectExchangeEnum.USER_REGISTER.getValue());
     }
 
     /**

@@ -7,7 +7,7 @@ package com.catpp.rabbitmq.common.enums;
  * @Date 2018/11/5
  * @Description rabbitmq交换枚举配置
  */
-public enum ExchangeEnum {
+public enum DirectExchangeEnum {
 
     /**
      * 用户注册交换枚举
@@ -20,7 +20,7 @@ public enum ExchangeEnum {
         return value;
     }
 
-    ExchangeEnum(String value) {
+    DirectExchangeEnum(String value) {
         this.value = value;
     }
 }

@@ -1,7 +1,7 @@
 package com.catpp.rabbitmq.provider.rabbitmq.impl;
 
 import com.catpp.rabbitmq.provider.rabbitmq.QueueMessageService;
-import com.catpp.rabbitmq.common.enums.ExchangeEnum;
+import com.catpp.rabbitmq.common.enums.DirectExchangeEnum;
 import com.catpp.rabbitmq.common.enums.QueueEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -29,13 +29,13 @@ public class QueueMessageServiceImpl implements QueueMessageService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public void send(Object message, ExchangeEnum exchangeEnum, QueueEnum queueEnum) throws Exception {
+    public void send(Object message, DirectExchangeEnum directExchangeEnum, QueueEnum queueEnum) throws Exception {
         // 设置回调为当前类对象
         rabbitTemplate.setConfirmCallback(this);
         // 构建回调id为uuid
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString().replaceAll("-", ""));
         // 发送消息到消息队列
-        rabbitTemplate.convertAndSend(exchangeEnum.getValue(), queueEnum.getRoutingKey(), message, correlationData);
+        rabbitTemplate.convertAndSend(directExchangeEnum.getValue(), queueEnum.getRoutingKey(), message, correlationData);
     }
 
     /**
