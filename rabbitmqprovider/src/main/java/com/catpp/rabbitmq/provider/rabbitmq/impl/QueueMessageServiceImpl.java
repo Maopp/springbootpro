@@ -41,9 +41,12 @@ public class QueueMessageServiceImpl implements QueueMessageService {
 
     @Override
     public void send(Object message, TopicExchangeEnum topicExchangeEnum, String routingKey) throws Exception {
-        // 不调用回调确认函数
+        // 设置回调为当前类对象
+        rabbitTemplate.setConfirmCallback(this);
+        // 构建回调id为uuid
+        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString().replaceAll("-", ""));
         // 发送消息到消息队列
-        rabbitTemplate.convertAndSend(topicExchangeEnum.getName(), routingKey, message);
+        rabbitTemplate.convertAndSend(topicExchangeEnum.getName(), routingKey, message, correlationData);
     }
 
     /**
