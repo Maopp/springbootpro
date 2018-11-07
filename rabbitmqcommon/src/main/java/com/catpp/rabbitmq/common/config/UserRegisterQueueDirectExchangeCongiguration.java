@@ -1,7 +1,7 @@
 package com.catpp.rabbitmq.common.config;
 
-import com.catpp.rabbitmq.common.enums.DirectExchangeEnum;
-import com.catpp.rabbitmq.common.enums.QueueEnum;
+import com.catpp.rabbitmq.common.enums.direct.DirectExchangeEnum;
+import com.catpp.rabbitmq.common.enums.direct.QueueEnum;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @Author cat_pp
  * @Date 2018/11/5
- * @Description 用户注册消息队列配置
+ * @Description 用户注册消息队列directExchange配置
  *
  * 配置交换实例：
  * 配置DirectExchange实例对象，为交换设置一个名称，引用ExchangeEnum枚举配置的交换名称，消息提供者与消息消费者的交换名称必须一致才具备的第一步的通讯基础。

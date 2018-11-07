@@ -1,4 +1,4 @@
-package com.catpp.rabbitmq.common.enums;
+package com.catpp.rabbitmq.common.enums.direct;
 
 /**
  * com.catpp.rabbitmqcommon.enums

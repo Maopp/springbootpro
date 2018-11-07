@@ -342,3 +342,20 @@ rabbitmq队列/exchange信息，就不用再管理平台手动维护队列数据
 
 ------------------------------------------------------------------------------------------------------------------------
 基于Spring Boot & RabbitMQ完成TopicExchange分布式消息消费：
+TopicExchange类型消息队列可以根据路径信息配置多个消息消费者，而转发的匹配规则信息则是我们定义的队列的路  由信息。
+
+在发送消息到队列时，需要我们传递一个路由相关的配置信息，RabbitMQ会根据发送时的消息路由规则信息与定义消息队列时的路由信息
+进行匹配，如果可以匹配则调用该队列的消费者完成消息的消费：com.catpp.rabbitmq.common.enums.topic.TopicEnum
+
+路由特殊字符 #
+    我们在com.catpp.rabbitmq.common.enums.topic.QueueEnum内配置的路由键有个特殊的符号：#，在RabbitMQ消息队列内路由配置#时
+    表示可以匹配零个或多个字符，TopicEnum枚举内定义的register.user，则是可以匹配QueueEnum枚举定义register.#队列的路由规则。
+    当然发送消息时如果路由传递：register.user.account也是可以同样匹配register.#的路由规则。
+
+路由特殊字符 *
+    除此之外比较常用到的特殊字符还有一个*，在RabbitMQ消息队列内路由配置*时表示可以匹配一个字符，我们QueueEnum定义路由键
+    如果修改成register.*时，发送消息时路由为register.user则是可以接受到消息的。但如果发送时的路由为register.user.account时，
+    则是无法匹配该消息。
+
+# @RabbitListener监听注解一定要注解在方法上，不然消费出错，会循环消费，内存就炸啦
+

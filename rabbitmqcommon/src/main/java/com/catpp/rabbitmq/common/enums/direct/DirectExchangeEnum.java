@@ -1,4 +1,4 @@
-package com.catpp.rabbitmq.common.enums;
+package com.catpp.rabbitmq.common.enums.direct;
 
 /**
  * com.catpp.rabbitmqcommon.enums
@@ -12,7 +12,7 @@ public enum DirectExchangeEnum {
     /**
      * 用户注册交换枚举
      */
-    USER_REGISTER("user.register.topic.exchange");
+    USER_REGISTER("user.register.direct.exchange");
 
     private String value;
 
