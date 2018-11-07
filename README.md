@@ -324,7 +324,7 @@ Windows下安装
 禁用界面管理插件：
     rabbitmq-plugins.bat disable rabbitmq_management
 
-消息队列配置类内容：com.catpp.rabbitmqcommon.config.UserRegisterQueueCongiguration
+消息队列配置类内容：UserRegisterQueueCongiguration
     配置交换实例：
     配置DirectExchange实例对象，为交换设置一个名称，引用ExchangeEnum枚举配置的交换名称，消息提供者与消息消费者的交换名称
     必须一致才具备的第一步的通讯基础。
@@ -336,3 +336,5 @@ Windows下安装
     后，只有符合该路由配置的消息才会被转发到绑定交换上的消息队列。
 
 # 目前需要在可视化平台进行手动维护exchanges/queue/routingKey绑定
+# 修改工程目录结构，是启动类扫描到common工程的com.catpp.rabbitmq.common.config.UserRegisterQueueCongiguration配置类，初始化
+rabbitmq队列/exchange信息，就不用再管理平台手动维护队列数据啦
