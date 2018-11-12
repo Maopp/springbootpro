@@ -42,4 +42,10 @@ public interface QueueMessageService extends RabbitTemplate.ConfirmCallback {
      * @param delayTimes 延迟时间，单位：毫秒
      */
     void sendMessageTtl(Object message, String exchange, String routingKey, final long delayTimes);
+
+    /**
+     * 发送消息
+     * @param object
+     */
+    void sendMessageTrustPackage(Object object);
 }

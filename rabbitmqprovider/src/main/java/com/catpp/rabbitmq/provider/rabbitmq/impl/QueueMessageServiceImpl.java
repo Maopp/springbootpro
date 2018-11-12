@@ -1,5 +1,7 @@
 package com.catpp.rabbitmq.provider.rabbitmq.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.catpp.rabbitmq.common.constants.QueueConstants;
 import com.catpp.rabbitmq.common.enums.topic.TopicExchangeEnum;
 import com.catpp.rabbitmq.provider.rabbitmq.QueueMessageService;
 import com.catpp.rabbitmq.common.enums.direct.DirectExchangeEnum;
@@ -69,6 +71,12 @@ public class QueueMessageServiceImpl implements QueueMessageService {
         } else {
             log.error("未找到队列消息：{} 所属的交换机", exchange);
         }
+    }
+
+    @Override
+    public void sendMessageTrustPackage(Object object) {
+        log.info("写入消息队列内容：{}", JSON.toJSONString(object));
+        amqpTemplate.convertAndSend(QueueConstants.MESSAGE_EXCHANGE, QueueConstants.MESSAGE_ROUTE_KEY, object);
     }
 
     /**

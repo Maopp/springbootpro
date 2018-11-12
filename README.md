@@ -369,3 +369,16 @@ TopicExchange类型消息队列可以根据路径信息配置多个消息消费�
 配置延迟队列的时候配置两个参数值：
     x-dead-letter-exchange：配置到期后转发的交换
     x-dead-letter-routing-key：配置到期后转发的路由键
+
+
+------------------------------------------------------------------------------------------------------------------------
+Spring Boot 2.0新特性-RabbitMQ信任package设置：
+SpringBoot升级后，之前的系统内使用实体传输受到了限制，如果使用SpringBoot默认的序列化方式不会出现信任package的问题，之所以
+出现这个问题是因为项目使用fastjson方式进行类的序列化和反序列化，在之前SpringBoot 1.5.10版本的时候 RabbitMQ依赖内的
+DefaultClassMapper类在构造函数内配置*，表示信任项目内的所有package，在SpringBoot 2.0.0版本时，DefaultClassMapper类源码
+构造函数进行了修改，不再信任全部package，而是仅仅信任java.util、java.lang。
+
+之前都是采用的Enum方式来配置队列相关的Exchange、Name、 RouteKey等相关的信息，使用枚举有个弊端，无法在注解内作为属性的值使用，
+所以之前的Consumer类配置监听的队列时都是字符串的形式，这样后期修改时还要修改多个地方（当然队列信息很少变动），本例使用
+Constants常量的形式进行配置
+
