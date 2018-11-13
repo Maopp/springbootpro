@@ -382,3 +382,33 @@ DefaultClassMapper类在构造函数内配置*，表示信任项目内的所有p
 所以之前的Consumer类配置监听的队列时都是字符串的形式，这样后期修改时还要修改多个地方（当然队列信息很少变动），本例使用
 Constants常量的形式进行配置
 
+
+------------------------------------------------------------------------------------------------------------------------
+SpringBoot2.0新特性-Quartz自动化配置集成：
+com.catpp.springbootpro.config.QuartzConfiguration配置类不需要手动配置啦，quartz自动配置啦。
+
+我们找到Idea的External Libraries并且展开spring-boot-autoconfigure-2.0.0.RELEASE.jar，找到
+org.springframework.boot.autoconfigure.quartz，该目录就是SpringBoot为我们提供的Quartz自动化配置源码实现，在该目录下有如下所示几个类：
+- AutowireCapableBeanJobFactory
+该类替代了我们之前在QuartzConfiguration配置类的AutowiringSpringBeanJobFactory内部类实现，主要作用是我们自定义的
+QuartzJobBean子类被Spring IOC进行托管，可以在定时任务类内使用注入任意被Spring IOC托管的类。
+- JobStoreType
+该类是一个枚举类型，定义了对应application.yml、application.properties文件内spring.quartz.job-store-type配置，其目的是配置
+quartz任务的数据存储方式，分别为：MEMORY（内存方式：默认）、JDBC（数据库方式）。
+- QuartzAutoConfiguration
+该类是自动配置的主类，内部配置了SchedulerFactoryBean以及JdbcStoreTypeConfiguration，使用QuartzProperties作为属性自动化配置条件。
+- QuartzDataSourceInitializer
+该类主要用于数据源初始化后的一些操作，根据不同平台类型的数据库进行选择不同的数据库脚本。
+- QuartzProperties
+该类对应了spring.quartz在application.yml、application.properties文件内开头的相关配置。
+- SchedulerFactoryBeanCustomizer
+这是一个接口，我们实现该接口后并且将实现类使用Spring IOC托管，可以完成SchedulerFactoryBean的个性化设置，这里的设置完全
+可以对SchedulerFactoryBean做出全部的设置变更。
+
+----------------------------
+注释掉com.catpp.springbootpro.config.QuartzConfiguration配置类的@Configuration注解，在application-dev.properties配置文件
+中添加quartz相关属性/持久化方式配置（取代quartz.properties配置文件），调用/goods/save方法，完成自动化配置
+
+###########################################################################################
+# External Libraries目录下：spring-boot-autoconfigure:2.0.0.RELEASE工程完成各种自动化配置 #
+###########################################################################################
