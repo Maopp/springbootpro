@@ -412,3 +412,10 @@ quartz任务的数据存储方式，分别为：MEMORY（内存方式：默认�
 ###########################################################################################
 # External Libraries目录下：spring-boot-autoconfigure:2.0.0.RELEASE工程完成各种自动化配置 #
 ###########################################################################################
+
+
+------------------------------------------------------------------------------------------------------------------------
+Spring Boot2.0 快速集成Redis：
+注释掉com.catpp.springbootpro.config.RedisConfiguration配置类的@configuration注解，在application.properties配置文件中添加
+redis相关配置，可以省略配置，默认已经有了相关配置，在项目启动类上添加@EanbleCaching注解，在需要缓存的业务方法上添加
+@Cacheable(cacheNames = "spring2.0.service.user")注解就可以了哦。

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import tk.mybatis.spring.annotation.MapperScan;
@@ -16,6 +17,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 @ComponentScan("com.catpp.springbootpro")
 // 使用定时任务自动配置
 @EnableScheduling
+// 开启缓存，自动配置配置文件的配置信息进行条件注入缓存所需实例
+@EnableCaching
 public class SpringbootproApplication {
 
 	public static void main(String[] args) {
