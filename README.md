@@ -419,3 +419,27 @@ Spring Boot2.0 快速集成Redis：
 注释掉com.catpp.springbootpro.config.RedisConfiguration配置类的@configuration注解，在application.properties配置文件中添加
 redis相关配置，可以省略配置，默认已经有了相关配置，在项目启动类上添加@EanbleCaching注解，在需要缓存的业务方法上添加
 @Cacheable(cacheNames = "spring2.0.service.user")注解就可以了哦。
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于SpringBoot2 & MongoDB完成自动化配置：
+MongoDB在企业级项目中一般用于存储文档信息、图片资源等，MongoDB的内容完全是以 JSON字符串的形式进行存储的，所以我们在获取
+数据时通过简单的 反序列化就可以完成与项目内的实体类转换，不过这个过程是自动的，不需要我们手动进行反序列化处理。
+
+打开mongo.exe命令面板：
+    创建数据库：use test_db
+        创建成功：switched to db test_db
+    创建数据库所有者角色的用户：db.createUser({user:"test",pwd:"123qwe",roles:[{role:"dbOwner",db:"test_db"}]})
+        创建成功：Successfully added user: {
+                         "user" : "test",
+                         "roles" : [
+                                 {
+                                         "role" : "dbOwner",
+                                         "db" : "test_db"
+                                 }
+                         ]
+                 }
+
+spring-boot-starter-data-mongodb确实采用了跟spring-boot-starter-data-jpa同样的方式来完成接口代理类的生成，并且提供了一些
+常用的单个对象操作的公共方法，MongoRepository接口作用与JPARepository一致，继承了该接口的业务数据接口就可以提供一个被
+Spring IOC托管的代理实现类，这样我们在注入业务数据接口时就会完成代理实现类的注入。
