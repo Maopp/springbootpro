@@ -29,6 +29,10 @@ public class MongoTests extends BaseTest {
         customerRepository.deleteAll();
         // 保存一条数据
         customerRepository.insert(new Customer("名字", "姓氏"));
+        customerRepository.insert(new Customer("名字3", "姓氏2"));
+        customerRepository.insert(new Customer("名字3", "姓氏1"));
+        customerRepository.insert(new Customer("名字2", "姓氏1"));
+        customerRepository.insert(new Customer("名字2", "姓氏2"));
         // 查询
         List<Customer> all = customerRepository.findAll();
         log.info(JSON.toJSONString(all));

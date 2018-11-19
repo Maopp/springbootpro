@@ -443,3 +443,185 @@ MongoDB在企业级项目中一般用于存储文档信息、图片资源等，M
 spring-boot-starter-data-mongodb确实采用了跟spring-boot-starter-data-jpa同样的方式来完成接口代理类的生成，并且提供了一些
 常用的单个对象操作的公共方法，MongoRepository接口作用与JPARepository一致，继承了该接口的业务数据接口就可以提供一个被
 Spring IOC托管的代理实现类，这样我们在注入业务数据接口时就会完成代理实现类的注入。
+
+
+------------------------------------------------------------------------------------------------------------------------
+基于Springboot2使用Rest访问MongoDB数据：
+添加依赖：spring-boot-starter-data-rest
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-rest</artifactId>
+    </dependency>
+
+spring-boot-starter-data-rest会自动扫描添加@RepositoryRestResource注解的接口，自动将该接口映射为一系列可通过rest访问的请求路径
+注解内需要提供两个参数，
+    collectionResourceRel：该参数配置映射MongoDB内的Collection名称。
+    path：该参数配置映射完成rest后访问的路径前缀。
+
+访问http://localhost:8085/customer
+{
+    "_embedded": {
+        "customer": [
+            {
+                "firstName": "名字",
+                "lastName": "姓氏",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8085/customer/5bebb495fb62452c8c74df62"
+                    },
+                    "customer": {
+                        "href": "http://localhost:8085/customer/5bebb495fb62452c8c74df62"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8085/customer{?page,size,sort}",
+            "templated": true
+        },
+        "profile": {
+            "href": "http://localhost:8085/profile/customer"
+        }
+    },
+    "page": {
+        "size": 20,
+        "totalElements": 1,
+        "totalPages": 1,
+        "number": 0
+    }
+}
+接口返回MongoDB.collection集合内的数据，还提供了分页信息，接下来可以通过id进行访问：http://localhost:8085/customer/5bebb495fb62452c8c74df62
+{
+    "firstName": "名字",
+    "lastName": "姓氏",
+    "_links": {
+        "self": {
+            "href": "http://localhost:8085/customer/5bebb495fb62452c8c74df62"
+        },
+        "customer": {
+            "href": "http://localhost:8085/customer/5bebb495fb62452c8c74df62"
+        }
+    }
+}
+
+在CustomerRepository中添加自定义方法，可以调用接口：http://localhost:8085/customer/search/findByFirstName?firstName=名字
+{
+    "_embedded": {
+        "customer": [
+            {
+                "firstName": "名字",
+                "lastName": "姓氏",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8085/customer/5bebb495fb62452c8c74df62"
+                    },
+                    "customer": {
+                        "href": "http://localhost:8085/customer/5bebb495fb62452c8c74df62"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8085/customer/search/findByFirstName?firstName=%E5%90%8D%E5%AD%97"
+        }
+    }
+}
+
+# 调用http://localhost:8085/profile/customer查询接口详情：
+{
+    "alps": {
+        "version": "1.0",
+        "descriptors": [
+            {
+                "id": "customer-representation",
+                "href": "http://localhost:8085/profile/customer",
+                "descriptors": [
+                    {
+                        "name": "firstName",
+                        "type": "SEMANTIC"
+                    },
+                    {
+                        "name": "lastName",
+                        "type": "SEMANTIC"
+                    }
+                ]
+            },
+            {
+                "id": "create-customer",
+                "name": "customer",
+                "type": "UNSAFE",
+                "rt": "#customer-representation"
+            },
+            {
+                "id": "get-customer",
+                "name": "customer",
+                "type": "SAFE",
+                "rt": "#customer-representation",
+                "descriptors": [
+                    {
+                        "name": "page",
+                        "doc": {
+                            "value": "The page to return.",
+                            "format": "TEXT"
+                        },
+                        "type": "SEMANTIC"
+                    },
+                    {
+                        "name": "size",
+                        "doc": {
+                            "value": "The size of the page to return.",
+                            "format": "TEXT"
+                        },
+                        "type": "SEMANTIC"
+                    },
+                    {
+                        "name": "sort",
+                        "doc": {
+                            "value": "The sorting criteria to use to calculate the content of the page.",
+                            "format": "TEXT"
+                        },
+                        "type": "SEMANTIC"
+                    }
+                ]
+            },
+            {
+                "id": "delete-customer",
+                "name": "customer",
+                "type": "IDEMPOTENT",
+                "rt": "#customer-representation"
+            },
+            {
+                "id": "patch-customer",
+                "name": "customer",
+                "type": "UNSAFE",
+                "rt": "#customer-representation"
+            },
+            {
+                "id": "update-customer",
+                "name": "customer",
+                "type": "IDEMPOTENT",
+                "rt": "#customer-representation"
+            },
+            {
+                "id": "get-customer",
+                "name": "customer",
+                "type": "SAFE",
+                "rt": "#customer-representation"
+            },
+            {
+                "name": "findByFirstName",
+                "type": "SAFE",
+                "descriptors": [
+                    {
+                        "name": "firstName",
+                        "type": "SEMANTIC"
+                    }
+                ]
+            }
+        ]
+    }
+}
