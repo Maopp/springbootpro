@@ -9,7 +9,7 @@ LogBack读取配置文件的步骤
 （2）如果文件不存在，尝试查找logback.xml
 （3）如果两个文件都不存在，LogBack用BasicConfiguration自动对自己进行最小化配置
 
-redis常用命令：
+# redis常用命令：
 flushdb：清空当前数据库。
 select [index]：选择索引数据库，index为索引值名，如：select 1。
 del [key]：删除一条指定key的值。
@@ -18,6 +18,7 @@ flushall：清空所有数据库。
 quit：退出客户端连接。
 
 ------------------------------------------------------------------------------------------------------------------------
+# JWT
 JWT是一种用户双方之间传递安全信息的简洁的、URL安全的表述性声明规范。
 JWT（Json Web Token）作为一个开放的标准（RFC 7519），定义了一种简洁的、自包含的方法
 用于通信双方之间以Json对象的形式进行安全性信息传递，传递时有数字签名所以信息时安全的，
@@ -43,6 +44,7 @@ JWT客户端发送请求到服务器端整体流程：mine/jwt.webp
 
 
 ------------------------------------------------------------------------------------------------------------------------
+# WebSocket
 WebSocket为浏览器和服务端提供了双工异步通信的功能，浏览器可以向服务端发送消息，服务端也可以向浏览器发送消息。
 WebSocket需要浏览器的支持，目前大多数主流的浏览器都是支持的。
 
@@ -53,14 +55,14 @@ SpringBoot在tomcat7内嵌版本就已经开始支持了WebSocket的支持，
 配置源码存在于org.springframework.boot.autoconfigure.websocket下
 
 ------------------------------------------------------------------------------------------------------------------------
-全局异常处理：
+# 全局异常处理：
 @ControllerAdvice注解是用来配置控制器通知的，我们可以配置过滤拦截具体一种或者多种类型的注解，添加annotations属性即可，
 因为我们全局返回的都是Json格式的字符串，所以需要再类上配置@ResponseBody注解
 # 使用系统日志功能，记录持久化到数据库
 
 
 ------------------------------------------------------------------------------------------------------------------------
-CORS跨域请求：
+# CORS跨域请求：
 CORS（Cross-Origin Resource Sharing）"跨域资源共享"，是一个W3C标准，它允许浏览器向跨域服务器发送Ajax请求，
 打破了Ajax只能访问本站内的资源限制，CORS在很多地方都有被使用，微信支付的JS支付就是通过JS向微信服务器发送跨域请求。
 开放Ajax访问可被跨域访问的服务器大大减少了后台开发的工作，前后台工作也可以得到很好的明确以及分工
@@ -69,13 +71,13 @@ CORS（Cross-Origin Resource Sharing）"跨域资源共享"，是一个W3C标准
 
 
 ------------------------------------------------------------------------------------------------------------------------
-使用@Scheduled注解完成定时任务
+# 使用@Scheduled注解完成定时任务
 定时任务一般会存在中大型企业级项目中，为了减少服务器、数据库的压力往往会采用时间段性的去完成某些业务逻辑。
 比较常见的就是金融服务系统推送回调，一般支付系统订单在没有收到成功的回调返回内容时会持续性的回调，
 这种回调一般都是定时任务来完成的。还有就是报表的生成，我们一般会在客户访问量过小的时候来完成这个操作，那往往都是在凌晨。
 这时我们也可以采用定时任务来完成逻辑。SpringBoot为我们内置了定时任务，我们只需要一个注解就可以开启定时为我们所用了
 
-# 定时任务类需要添加@Component注解
+定时任务类需要添加@Component注解
 
 @Scheduled注解属性：
 1、cron属性
@@ -116,12 +118,12 @@ Year : 可出现", - * /"四个字符，有效范围为1970-2099年
 
 
 ------------------------------------------------------------------------------------------------------------------------
-使用ApplicationEvent&Listener完成业务解耦：
+# 使用ApplicationEvent&Listener完成业务解耦：
 ApplicationEvent以及Listener是Spring为我们提供的一个事件监听、订阅的实现，内部实现原理是观察者设计模式，
 设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。事件发布者并不需要考虑谁去监听，
 监听具体的实现内容是什么，发布者的工作只是为了发布事件而已。
 
-# 在Spring内部中有多种方式实现监听如：@EventListener注解、实现ApplicationListener泛型接口、实现SmartApplicationListener接口等
+在Spring内部中有多种方式实现监听如：@EventListener注解、实现ApplicationListener泛型接口、实现SmartApplicationListener接口等
 1、@EventListener实现监听
 注解方式比较简单，并不需要实现任何接口
 只需要让我们的监听类被Spring所管理即可，在我们用户注册监听实现方法上添加@EventListener注解，该注解会根据方法内配置的事件完成监听。
@@ -140,20 +142,20 @@ SmartApplicationListener接口继承了全局监听ApplicationListener，并且�
 
 ***提供了一个getOrder方法，这个方法就可以解决执行监听的顺序问题，return的数值越小证明优先级越高，执行顺序越靠前。
 
-# 使用@Async实现异步监听
+使用@Async实现异步监听
 @Aysnc其实是Spring内的一个组件，可以完成对类内单个或者多个方法实现异步调用，这样可以大大的节省等待耗时。
 内部实现机制是线程池任务ThreadPoolTaskExecutor，通过线程池来对配置@Async的方法或者类做出执行动作。
 
 
 ------------------------------------------------------------------------------------------------------------------------
-使用AutoConfiguration自定义starter：
+# 使用AutoConfiguration自定义starter：
 新建maven工程，打包，在本工程中引入
 @ConfigurationProperties，该注解可以完成将application.properties配置文件内的有规则的配置参数映射到实体内的field内，不过需要提供setter方法
 1、实体bean
 2、业务代码
 3、自定义starter自动化配置
 
-# 相关注解说明：
+相关注解说明：
 @EnableConfigurationProperties：这是一个开启使用配置参数的注解，value值就是我们配置实体参数映射的ClassType，将配置实体作为配置来源。
 SpringBoot内置条件注解，以下注解都是元注解@Conditional演变而来的，根据不同的条件对应创建以上的具体条件注解：
     @ConditionalOnBean：当SpringIoc容器内存在指定Bean的条件
@@ -171,13 +173,13 @@ SpringBoot内置条件注解，以下注解都是元注解@Conditional演变而�
 
 
 ------------------------------------------------------------------------------------------------------------------------
-自定义spring boot启动banner：
+# 自定义spring boot启动banner：
 1、在src/main/resource下添加一个名叫banner.txt的文件，将需要修改的内容写入到该文件内就可以啦
 2、配置字体颜色：${AnsiColor.BRIGHT_RED}
 
 3、配置背景颜色：${AnsiBackground.BRIGHT_RED}
 
-# 添加的文字内容可以通过banner在线生成工具来生成：
+添加的文字内容可以通过banner在线生成工具来生成：
     http://www.bootschool.net/ascii
     http://patorjk.com/software/taag/#p=display&f=%E6%B6%82%E9%B8%A6&t=Type%20Something%20
     https://www.degraeve.com/img2txt.php
@@ -191,11 +193,11 @@ ${spring-boot.formatted-version}：格式化后的${spring-boot.version}版本�
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于SpringBoot架构重写springMVC请求参数装载：
+# 基于SpringBoot架构重写springMVC请求参数装载：
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于SpringBoot架构以及参数装载完成接口安全认证：
+# 基于SpringBoot架构以及参数装载完成接口安全认证：
 实现思路是采用SpringMvc拦截器来完成指定注解的拦截，并且根据拦截做出安全属性的处理，再结合自定义的参数装载完成对应参数的赋值
 https://blog.csdn.net/weixin_42033269/article/details/80035814
 
@@ -206,7 +208,7 @@ https://blog.csdn.net/weixin_42033269/article/details/80035814
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于SpringBoot架构适当使用Profile完成打包环境分离：
+# 基于SpringBoot架构适当使用Profile完成打包环境分离：
 说明：
     在中大型企业项目开发中，环境分离是必不可少的一步，然而现在的开发人员也只是有这个概念，还是有很多项目采用普通的方式，
     每次打包发布部署的时候改动一大堆的配置文件，有一个地方忘记改就相当于白更新了一次系统，这种修改配置文件完成环境更换的
@@ -223,7 +225,7 @@ https://blog.csdn.net/weixin_42033269/article/details/80035814
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于Spring Boot 和 Quartz完成定时任务分布式单节点持久化：
+# 基于Spring Boot 和 Quartz完成定时任务分布式单节点持久化：
 1、为什么要持久化定时任务？
     在一些项目中定时任务可能是必不可少的，由于某种特殊的原因定时任务可能丢失，如重启定时任务服务项目后，原内存中的定时
     任务就会被完全释放！那对于我们来说可能是致命的问题。当然也有强制的办法解决这类问题，但是如果我们把定时任务持久化到
@@ -254,11 +256,11 @@ QuartzConfiguration配置类说明：
     我们通过调用SchedulerFactoryBean对象的setConfigLocation方法来设置quartz定时任务框架的基本配置，
     配置文件所在位置：resources/quartz.properties => classpath:/quartz.properties下。
 
-# qrtz_job_details表中存放的时待执行的定时任务
+qrtz_job_details表中存放的时待执行的定时任务
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于SpringBoot 和 Quartz完成定时任务分布式多节点负载持久化：
+# 基于SpringBoot 和 Quartz完成定时任务分布式多节点负载持久化：
 1. org.quartz.scheduler.instanceId ： 定时任务的实例编号，如果手动指定需要保证每个节点的唯一性，因为quartz不允许出现两个
 相同instanceId的节点，我们这里指定为Auto就可以了，我们把生成编号的任务交给quartz。
 
@@ -280,7 +282,7 @@ QuartzConfiguration配置类说明：
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于Spring Boot & RabbitMQ完成DirectExchange分布式消息消费：
+# 基于Spring Boot & RabbitMQ完成DirectExchange分布式消息消费：
 消息队列目前流行的有KafKa、RabbitMQ、ActiveMQ等，它们的诞生无非就是为了解决消息的分布式消费，完成项目、服务之间的解耦动作。4
 消息队列提供者与消费者之间完全采用异步通信方式，极力的提高了系统的响应能力，从而提高系统的网络请求吞吐量。
 每一种的消息队列都有它在设计上的独一无二的优势，在实际的项目技术选型时根据项目的需求来确定。
@@ -335,13 +337,13 @@ Windows下安装
     配置Binding实例对象，消息绑定的目的就是将Queue实例绑定到Exchange上，并且通过设置的路由Key进行消息转发，配置了路由Key
     后，只有符合该路由配置的消息才会被转发到绑定交换上的消息队列。
 
-# 目前需要在可视化平台进行手动维护exchanges/queue/routingKey绑定
-# 修改工程目录结构，是启动类扫描到common工程的com.catpp.rabbitmq.common.config.UserRegisterQueueCongiguration配置类，初始化
+目前需要在可视化平台进行手动维护exchanges/queue/routingKey绑定
+修改工程目录结构，是启动类扫描到common工程的com.catpp.rabbitmq.common.config.UserRegisterQueueCongiguration配置类，初始化
 rabbitmq队列/exchange信息，就不用再管理平台手动维护队列数据啦
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于Spring Boot & RabbitMQ完成TopicExchange分布式消息消费：
+# 基于Spring Boot & RabbitMQ完成TopicExchange分布式消息消费：
 TopicExchange类型消息队列可以根据路径信息配置多个消息消费者，而转发的匹配规则信息则是我们定义的队列的路  由信息。
 
 在发送消息到队列时，需要我们传递一个路由相关的配置信息，RabbitMQ会根据发送时的消息路由规则信息与定义消息队列时的路由信息
@@ -357,14 +359,14 @@ TopicExchange类型消息队列可以根据路径信息配置多个消息消费�
     如果修改成register.*时，发送消息时路由为register.user则是可以接受到消息的。但如果发送时的路由为register.user.account时，
     则是无法匹配该消息。
 
-# @RabbitListener监听注解一定要注解在方法上，不然消费出错，会循环消费，内存就炸啦
+@RabbitListener监听注解一定要注解在方法上，不然消费出错，会循环消费，内存就炸啦
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于Spring Boot & RabbitMQ完成消息延迟消费：
+# 基于Spring Boot & RabbitMQ完成消息延迟消费：
 将消息先发送到ttl延迟队列内，当消息到达过期时间后会自动转发到ttl队列内配置的转发Exchange以及RouteKey绑定的队列内完成消息消费。
 
-# 配置交换和队列的时候要使用@Qualifier/使用不同变量名，不然实例化单例bean会报错
+配置交换和队列的时候要使用@Qualifier/使用不同变量名，不然实例化单例bean会报错
 
 配置延迟队列的时候配置两个参数值：
     x-dead-letter-exchange：配置到期后转发的交换
@@ -372,7 +374,7 @@ TopicExchange类型消息队列可以根据路径信息配置多个消息消费�
 
 
 ------------------------------------------------------------------------------------------------------------------------
-Spring Boot 2.0新特性-RabbitMQ信任package设置：
+# Spring Boot 2.0新特性-RabbitMQ信任package设置：
 SpringBoot升级后，之前的系统内使用实体传输受到了限制，如果使用SpringBoot默认的序列化方式不会出现信任package的问题，之所以
 出现这个问题是因为项目使用fastjson方式进行类的序列化和反序列化，在之前SpringBoot 1.5.10版本的时候 RabbitMQ依赖内的
 DefaultClassMapper类在构造函数内配置*，表示信任项目内的所有package，在SpringBoot 2.0.0版本时，DefaultClassMapper类源码
@@ -384,7 +386,7 @@ Constants常量的形式进行配置
 
 
 ------------------------------------------------------------------------------------------------------------------------
-SpringBoot2.0新特性-Quartz自动化配置集成：
+# SpringBoot2.0新特性-Quartz自动化配置集成：
 com.catpp.springbootpro.config.QuartzConfiguration配置类不需要手动配置啦，quartz自动配置啦。
 
 我们找到Idea的External Libraries并且展开spring-boot-autoconfigure-2.0.0.RELEASE.jar，找到
@@ -415,14 +417,14 @@ quartz任务的数据存储方式，分别为：MEMORY（内存方式：默认�
 
 
 ------------------------------------------------------------------------------------------------------------------------
-Spring Boot2.0 快速集成Redis：
+# Spring Boot2.0 快速集成Redis：
 注释掉com.catpp.springbootpro.config.RedisConfiguration配置类的@configuration注解，在application.properties配置文件中添加
 redis相关配置，可以省略配置，默认已经有了相关配置，在项目启动类上添加@EanbleCaching注解，在需要缓存的业务方法上添加
 @Cacheable(cacheNames = "spring2.0.service.user")注解就可以了哦。
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于SpringBoot2 & MongoDB完成自动化配置：
+# 基于SpringBoot2 & MongoDB完成自动化配置：
 MongoDB在企业级项目中一般用于存储文档信息、图片资源等，MongoDB的内容完全是以 JSON字符串的形式进行存储的，所以我们在获取
 数据时通过简单的 反序列化就可以完成与项目内的实体类转换，不过这个过程是自动的，不需要我们手动进行反序列化处理。
 
@@ -446,7 +448,7 @@ Spring IOC托管的代理实现类，这样我们在注入业务数据接口时�
 
 
 ------------------------------------------------------------------------------------------------------------------------
-基于Springboot2使用Rest访问MongoDB数据：
+# 基于Springboot2使用Rest访问MongoDB数据：
 添加依赖：spring-boot-starter-data-rest
     <dependency>
         <groupId>org.springframework.boot</groupId>
