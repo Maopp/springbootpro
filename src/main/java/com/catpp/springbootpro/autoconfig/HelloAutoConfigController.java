@@ -1,7 +1,7 @@
 package com.catpp.springbootpro.autoconfig;
 
-import com.catpp.autoconfiguration.customproperty.HelloService;
 import com.catpp.springbootpro.common.JsonResult;
+import com.catpp.springbootpro.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
